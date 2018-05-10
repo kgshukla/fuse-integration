@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:camel="http://camel.apache.org/schema/spring"
-       xmlns:context="http://www.springframework.org/schema/context" 
-       xmlns:cxf="http://camel.apache.org/schema/cxf"
-       xsi:schemaLocation="
-         http://www.springframework.org/schema/beans 
-         http://www.springframework.org/schema/beans/spring-beans.xsd
-         http://camel.apache.org/schema/spring 
-         http://camel.apache.org/schema/spring/camel-spring.xsd
-         http://camel.apache.org/schema/cxf 
-         http://camel.apache.org/schema/cxf/camel-cxf.xsd
-         http://www.springframework.org/schema/context
-		 http://www.springframework.org/schema/context/spring-context-3.1.xsd">
-		 
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="          http://www.springframework.org/schema/beans           http://www.springframework.org/schema/beans/spring-beans.xsd          http://camel.apache.org/schema/spring           http://camel.apache.org/schema/spring/camel-spring.xsd          http://camel.apache.org/schema/cxf           http://camel.apache.org/schema/cxf/camel-cxf.xsd          http://www.springframework.org/schema/context    http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+    <bean
+        class="com.redhat.consulting.fusequickstarts.eap.deployment.processor.XMLProcessor"
+        id="xmlProcessor" scope="singleton"/>
+    <bean
+        class="com.redhat.consulting.fusequickstarts.eap.deployment.processor.RequestProcessor"
+        id="requestProcessor" scope="singleton"/>
     <!-- The context scan and annotation config elements allow the use of the Component annotation to pick up the routes -->
-	<context:annotation-config/>
-	<context:component-scan base-package="com.redhat.consulting.fusequickstarts.eap.deployment.route"/>
-	
-	 <camel:camelContext id="spring-camel-eap" xmlns="http://camel.apache.org/schema/spring">
-			<contextScan/>
-	</camel:camelContext>
-	
-	<!-- RS Client for requests to endpoint -->
-     <cxf:rsClient id="rsClient" address="http://freegeoip.net" 
-     serviceClass="com.redhat.consulting.fusequickstarts.eap.deployment.route.SourceData" loggingFeatureEnabled="true"/>
-	
-	<!-- RS Service for consuming from the endpoint -->
-	<!-- 
-     <cxf:rsServer id="rsServer" address="http://freegeoip.net" 
-	 serviceClass="com.redhat.consulting.fusequickstarts.eap.deployment.route.SourceData" loggingFeatureEnabled="true"/>
-	 -->
-	
+    <context:annotation-config/>
+    <context:component-scan base-package="com.redhat.consulting.fusequickstarts.eap.deployment.route"/>
+    <camel:camelContext id="spring-camel-eap" xmlns="http://camel.apache.org/schema/spring">
+        <contextScan/>
+        <camel:route id="_route1">
+            <from id="_from1" uri="timer:timerName?fixedRate=true&amp;period=10000"/>
+            <log id="_log1" message="${body}"/>
+            <process id="_process1" ref="requestProcessor"/>
+            <camel:to id="_to1" uri="cxfrs:bean:rsClient"/>
+            <camel:process id="_process2" ref="xmlProcessor"/>
+            <camel:log id="_log2" message="${body}"/>
+        </camel:route>
+    </camel:camelContext>
+    <!-- RS Client for requests to endpoint -->
+    <cxf:rsClient address="http://freegeoip.net" id="rsClient"
+        loggingFeatureEnabled="true" serviceClass="com.redhat.consulting.fusequickstarts.eap.deployment.route.SourceData"/>
 </beans>

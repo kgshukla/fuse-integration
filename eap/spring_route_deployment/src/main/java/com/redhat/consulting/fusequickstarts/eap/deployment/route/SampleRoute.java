@@ -33,11 +33,13 @@ public class SampleRoute extends RouteBuilder {
     	component.setConnectionFactory(connectionFactory);
     	**/
     	
+    	/**
     	 from("timer://myEapTimer?fixedRate=true&period=10000")
          .process(requestProcessor)
          .to("cxfrs://bean://rsClient")
          .process(xmlProcessor)
          .log("Setting message to queue: ${body}");
+         **/
     	 
     	 /**
          .to("jms:queue:eapJmsTestQueue?clientId=eapJmsProducerRoute");
