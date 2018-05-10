@@ -20,27 +20,3 @@ You need to start the JBoss Enterprise Application Platform instance for JBoss F
 
 Additional installation information can be found here [https://access.redhat.com/documentation/en-us/red_hat_jboss_fuse/6.3/html/installation_on_jboss_eap/]
 
-## Basic Examples ##
-These examples are designed to demonstrate a single component or feature without much advanced or complex functionality. This is a good place for beginners to start.
-
- * [Camel on EAP - Basic Route Deployment w/ CDI](route_deployment)
- * Camel on EAP - JMS using a Message Driven Bean
- * [Camel on EAP - JMS using Camel-JMS](jms)
- * [Camel on EAP - A-MQ using a Message Driven Bean](amq_mdb)
- * Camel on EAP - A-MQ using Camel-ActiveMQ
- * [Camel on EAP - JAX-RS Consumer with the Camel REST DSL](rest_dsl)
- * [Camel on EAP - JAX-RS Consumer with CamelProxy](jaxrs_proxy)
- * Camel on EAP - JAX-WS Consumer with CamelProxy (Contract First)
- * Camel on EAP - JAX-WS Consumer with CamelProxy (Code First)
- * [Camel on EAP - JPA](jpa)
-
-## Advanced Examples ##
-These examples build upon the basic examples to demonstrate more advanced features or functionality. These examples assume a basic understanding of Fuse and its components.
-
- * Camel on EAP - JAX-RS Security
- * Camel on EAP - JAX-WS Security
- * Camel on EAP - JMS Transactions using Camel-JMS
- * Camel on EAP - JNDI Integration
- * Camel on EAP - Infinispan / JBoss Data Grid
- * Camel on EAP - Drools / JBoss BxMS
- * Arquillian Integration Test Suite
